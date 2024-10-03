@@ -1,0 +1,44 @@
+application:
+  env: DEFAULT-${user.name}
+  name: reporting
+
+logging:
+  level:
+    org:
+      hibernate: ERROR
+
+server:
+  port: 8237
+  error:
+    include-message: always
+
+management:
+  server:
+    port: 3782
+  endpoints:
+    web:
+      base-path: /reporting-mgmt
+
+test:
+  db-host: 127.0.0.1
+  api: inactive
+
+spring:
+  profiles:
+    default: default
+    include: gradle
+  application:
+    name: ${application.name}
+
+  datasource:
+    url: jdbc:postgresql://${test.db-host}:5432/test?stringtype=unspecified
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari.maximum-pool-size: 1
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true

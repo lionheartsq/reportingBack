@@ -1,0 +1,55 @@
+plugins {
+    id 'org.springframework.boot'
+}
+jar {
+    enabled = false
+}
+//Convenient mechanism to standardize and synchronize application YAML and build process
+processResources {
+    filesMatching('**/application-gradle.yml') {
+        expand(project.properties)
+    }
+    filesMatching('**/application-prod.properties') {
+        expand(project.properties)
+    }
+}
+
+bootJar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    manifest {
+        attributes 'Implementation-Title': 'MCH Reporting module'
+        attributes 'Implementation-Version': jarVersion
+        attributes 'Implementation-Vendor-Id': appVendor
+    }
+}
+
+dependencies {
+    api "mch-commons-api:mch-common-web:${mchCommonsVersion}"
+
+    /************** PROD dependencies **************/
+    api 'org.springframework.boot:spring-boot-starter-webflux'
+    api 'org.springframework.boot:spring-boot-starter-actuator'
+    api 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    api "org.mapstruct:mapstruct:${mapstructVersion}"
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    /************** BUILD dependencies **************/
+    compileOnly "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    compileOnly "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructVersion}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructVersion}"
+
+    /************** TEST dependencies **************/
+    testImplementation 'com.h2database:h2'
+}
+
+/* This part is used by the AWS ECR versioning. See gitAction configuration inside .github project folder */
+task versionTxt()  {
+    doLast {
+        new File(parent.projectDir, "version.txt").text = "$jarVersion"
+    }
+}
+
+tasks.named("build") { finalizedBy("versionTxt") }

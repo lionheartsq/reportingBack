@@ -24,7 +24,6 @@ bootJar {
 }
 
 dependencies {
-    api "mch-commons-api:mch-common-web:${mchCommonsVersion}"
 
     /************** PROD dependencies **************/
     api 'org.springframework.boot:spring-boot-starter-webflux'

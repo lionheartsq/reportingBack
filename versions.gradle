@@ -30,8 +30,6 @@ ext {
     springDependencyManagementVersion = '1.1.4'
     springCloudVersion = '2023.0.0'
     springAWSCloudVersion = '2.4.4'
-    mchCommonsVersion = '1.5.11'
-    mchNotificationVersion = '1.5'
 
     mapstructVersion = '1.5.5.Final'
     lombokMapstructVersion = '0.2.0'
@@ -46,21 +44,20 @@ ext {
     //Testing
     mockitoVersion = '4.12'
     springAddonsVersion = '7.6.11'
-    mchCoveragePluginVersion = '1.1.2'
+    coveragePluginVersion = '1.1.2'
 }
 
 println "Working BRANCH: ${workingBranch}"
 
-println "=========== MCH Artifact's versions ====================="
+println "=========== Proprietary Artifact's versions ====================="
 println "jarVersion = $jarVersion"
 
-println "=========== MCH library's versions ====================="
-println "mchCoveragePluginVersion = $mchCoveragePluginVersion"
+println "=========== Proprietary Library's versions ====================="
+println "coveragePluginVersion = $coveragePluginVersion"
 
 println "=========== Third party library's versions ============="
 println "springBootVersion = $springBootVersion"
 println "springCloudVersion = $springCloudVersion"
-println "mchCommonsVersion = $mchCommonsVersion"
 println "buckect4JVersion = $buckect4JVersion"
 println "mapstructVersion = $mapstructVersion"
 println "lombokMapstructVersion = $lombokMapstructVersion"

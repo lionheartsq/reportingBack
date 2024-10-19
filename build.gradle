@@ -2,18 +2,9 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 buildscript {
 	apply from: 'versions.gradle'
 	repositories {
-		maven {
-			name = "GitHubPlugins"
-			url = uri("https://maven.pkg.github.com/mycommunityhomes/code_coverage")
-			credentials {
-				username = project.findProperty("gpr_user")
-				password = project.findProperty("gpr_key")
-			}
-		}
 		mavenCentral()
 	}
 	dependencies {
-		classpath "mch-gradle-plugin:code_coverage:${mchCoveragePluginVersion}"
 		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
 	}
 }
@@ -21,29 +12,8 @@ buildscript {
 allprojects {
 	repositories {
 		mavenLocal()
-		maven {
-			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/mycommunityhomes/mch-commons")
-			credentials {
-				username = project.findProperty("gpr_user")
-				password = project.findProperty("gpr_key")
-			}
-		}
-		maven {
-			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/mycommunityhomes/mch-notification-service")
-			credentials {
-				username = project.findProperty("gpr_user")
-				password = project.findProperty("gpr_key")
-			}
-		}
 		mavenCentral()
 	}
-}
-
-//COVERAGE PERSISTENCY CONFIGURATION
-ext {
-	coveragePropertyFile = file("${projectDir}/coverage-limit.properties")  // main coverage database
 }
 
 subprojects {
@@ -51,10 +21,9 @@ subprojects {
 	apply plugin: 'java-library'
 	apply plugin: 'io.spring.dependency-management'
 
-	group = 'mch.property'
+	group = 'base.test'
 	version = "$jarVersion"
 	apply plugin: 'jacoco'
-	apply plugin: 'mch-code-coverage'
 
 	java {
 		toolchain {
